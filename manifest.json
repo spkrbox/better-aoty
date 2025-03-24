@@ -1,0 +1,11 @@
+[
+    {
+        "name": "Better AOTY",
+        "description": "Show album ratings from albumoftheyear.org directly in your player.",
+        "preview": "./assets/preview.webp",
+        "main": "./dist/better-aoty.js",
+        "readme": "./README.md",
+        "authors": [{ "name": "spkrbox", "url": "https://github.com/spkrbox" }],
+        "tags": ["albumoftheyear"]
+    }
+]
