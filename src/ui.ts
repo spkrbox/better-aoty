@@ -48,9 +48,11 @@ export function createReviewElement(review: UserReview, type: 'user'): HTMLEleme
     const sourceIcon = document.createElement('div')
     sourceIcon.className = 'aoty-source-icon'
     sourceIcon.textContent = review.author.charAt(0).toUpperCase()
-    source.textContent = review.author
 
-    source.prepend(sourceIcon)
+    const authorText = document.createTextNode(review.author)
+    source.appendChild(sourceIcon)
+    source.appendChild(authorText)
+
     reviewHeader.appendChild(source)
 
     if (review.rating) {
@@ -63,9 +65,10 @@ export function createReviewElement(review: UserReview, type: 'user'): HTMLEleme
 
     const text = document.createElement('p')
     text.className = 'aoty-review-text'
+    text.textContent = review.text
 
-    text.textContent =
-        review.text.length > 160 ? review.text.substring(0, 160) + '...' : review.text
+    reviewEl.appendChild(reviewHeader)
+    reviewEl.appendChild(text)
 
     if (review.likes > 0) {
         const meta = document.createElement('div')
@@ -73,14 +76,11 @@ export function createReviewElement(review: UserReview, type: 'user'): HTMLEleme
 
         const likes = document.createElement('div')
         likes.className = 'aoty-meta-item'
-        likes.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01z"></path></svg> ${review.likes}`
+        likes.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01z"></path></svg> ${review.likes}`
 
         meta.appendChild(likes)
         reviewEl.appendChild(meta)
     }
-
-    reviewEl.appendChild(reviewHeader)
-    reviewEl.appendChild(text)
 
     return reviewEl
 }
@@ -95,63 +95,82 @@ export function updatePopoverContent(album: Album, popover: HTMLElement) {
     const header = document.createElement('div')
     header.className = 'aoty-header'
 
-    if (album.user_score !== null && album.user_score !== undefined) {
-        const score = document.createElement('div')
-        score.className = 'aoty-header-score'
-        score.style.backgroundColor = getRatingColorBg(album.user_score)
-        score.textContent = Math.round(album.user_score).toString()
-        header.appendChild(score)
+    const albumCoverUrl = Spicetify.Player.data?.item?.metadata?.image_xlarge_url || ''
+
+    const albumCover = document.createElement('div')
+    albumCover.className = 'aoty-album-cover'
+    if (albumCoverUrl) {
+        albumCover.style.backgroundImage = `url(${albumCoverUrl})`
     }
 
-    const info = document.createElement('div')
-    info.className = 'aoty-header-info'
+    const infoContainer = document.createElement('div')
+    infoContainer.className = 'aoty-info-container'
+
+    const titleArea = document.createElement('div')
+    titleArea.className = 'aoty-title-area'
 
     const title = document.createElement('h3')
-    title.className = 'aoty-album-title'
-
-    const titleText = document.createElement('span')
-    titleText.className = 'aoty-album-title-text'
-    titleText.textContent = album.title
-    title.appendChild(titleText)
-
-    if (album.is_must_hear) {
-        const badge = document.createElement('div')
-        badge.className = 'aoty-badge'
-
-        const star = document.createElement('span')
-        star.className = 'aoty-badge-star'
-        star.textContent = '★'
-
-        badge.appendChild(star)
-        badge.appendChild(document.createTextNode('Must Hear'))
-
-        title.appendChild(badge)
-    }
+    title.className = 'aoty-title'
+    title.textContent = album.title
+    titleArea.appendChild(title)
 
     const artist = document.createElement('p')
     artist.className = 'aoty-artist'
     artist.textContent = album.artist
+    titleArea.appendChild(artist)
 
-    info.appendChild(title)
-    info.appendChild(artist)
+    // Add "Must Hear" badge below artist name if applicable
+    if (album.is_must_hear) {
+        const mustHearBadge = document.createElement('div')
+        mustHearBadge.className = 'aoty-must-hear-badge'
+        mustHearBadge.innerHTML =
+            '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg> Must Hear'
+        titleArea.appendChild(mustHearBadge)
+    }
 
-    header.appendChild(info)
+    infoContainer.appendChild(titleArea)
+
+    if (album.user_score !== null && album.user_score !== undefined) {
+        const ratingArea = document.createElement('div')
+        ratingArea.className = 'aoty-rating-area'
+
+        const score = document.createElement('div')
+        score.className = 'aoty-score'
+        score.textContent = Math.round(album.user_score).toString()
+        ratingArea.appendChild(score)
+
+        infoContainer.appendChild(ratingArea)
+    }
+
+    albumCover.appendChild(infoContainer)
+    header.appendChild(albumCover)
     container.appendChild(header)
+
+    // Create a compact tabs container
+    const tabsContainer = document.createElement('div')
+    tabsContainer.className = 'aoty-tabs-container'
 
     const tabs = document.createElement('div')
     tabs.className = 'aoty-tabs'
 
+    // Reviews tab with counter
     const reviewsTab = document.createElement('div')
     reviewsTab.className = 'aoty-tab active'
-    reviewsTab.textContent = 'Reviews'
+    const reviewsCount = album.popular_reviews?.length || 0
+    reviewsTab.textContent = `Reviews ${reviewsCount > 0 ? `(${reviewsCount})` : ''}`
 
+    // Tracks tab with counter
     const tracksTab = document.createElement('div')
     tracksTab.className = 'aoty-tab'
-    tracksTab.textContent = 'Tracks'
+    tracksTab.textContent = `Tracks (${album.tracks?.length || 0})`
 
     tabs.appendChild(reviewsTab)
     tabs.appendChild(tracksTab)
-    container.appendChild(tabs)
+    tabsContainer.appendChild(tabs)
+    container.appendChild(tabsContainer)
+
+    const contentContainer = document.createElement('div')
+    contentContainer.className = 'aoty-content-container'
 
     const reviewsContent = document.createElement('div')
     reviewsContent.className = 'aoty-tab-content active'
@@ -166,6 +185,11 @@ export function updatePopoverContent(album: Album, popover: HTMLElement) {
     const tracksList = document.createElement('div')
     tracksList.className = 'aoty-tracks-list'
     tracksContent.appendChild(tracksList)
+
+    // Add content sections to container
+    contentContainer.appendChild(reviewsContent)
+    contentContainer.appendChild(tracksContent)
+    container.appendChild(contentContainer)
 
     if (album.popular_reviews && album.popular_reviews.length > 0) {
         album.popular_reviews.forEach((review) => {
@@ -218,7 +242,7 @@ export function updatePopoverContent(album: Album, popover: HTMLElement) {
                 const rating = document.createElement('div')
                 rating.className = 'aoty-track-rating'
                 rating.style.backgroundColor = getRatingColorBg(track.rating)
-                rating.textContent = track.rating.toString()
+                rating.textContent = Math.round(track.rating).toString()
                 trackEl.appendChild(rating)
             }
 
@@ -250,15 +274,11 @@ export function updatePopoverContent(album: Album, popover: HTMLElement) {
     if (album.user_score !== null && album.user_score !== undefined) {
         const meta = document.createElement('p')
         meta.className = 'aoty-meta'
-        meta.textContent = `Overall rating of ${Math.round(album.user_score)} based on ${
-            album.num_ratings
-        } ratings`
+        meta.textContent = `${Math.round(album.user_score)} / 100 · ${album.num_ratings} ratings`
         reviewsContent.appendChild(meta)
     }
 
-    container.appendChild(reviewsContent)
-    container.appendChild(tracksContent)
-
+    // Update tab click handlers
     reviewsTab.addEventListener('click', () => {
         reviewsTab.classList.add('active')
         tracksTab.classList.remove('active')
