@@ -4,7 +4,7 @@ import { normalizeAlbumName } from './utils'
 export async function fetchAlbumData(artist: string, album: string): Promise<Album | null> {
     try {
         const normalizedAlbum = normalizeAlbumName(album)
-        const apiUrl = `http://localhost:8000/album/?artist=${encodeURIComponent(
+        const apiUrl = `https://aoty.jwd.gg/album/?artist=${encodeURIComponent(
             artist
         )}&album=${encodeURIComponent(normalizedAlbum)}`
 
