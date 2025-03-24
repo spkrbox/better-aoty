@@ -22,7 +22,7 @@ iwr -useb https://raw.githubusercontent.com/spkrbox/better-aoty/refs/heads/maste
 
 If you prefer to install manually:
 
-1. Download the `better-aoty.js` from the [dist](https://github.com/spkrbox/better-aoty/tree/master/dist) folder
+1. Download `better-aoty.js` from the [dist](https://github.com/spkrbox/better-aoty/tree/master/dist) folder
 2. Place it in your Spicetify extensions folder:
     - Linux/macOS: `~/.config/spicetify/Extensions/`
     - Windows: `%appdata%\spicetify\Extensions\`
