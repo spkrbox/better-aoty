@@ -9,13 +9,13 @@ A spicetify extension that shows album ratings from albumoftheyear.org directly 
 ### Linux/macOS
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/spkrbox/better-aoty/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/spkrbox/better-aoty/refs/heads/master/scripts/install.sh | sh
 ```
 
 ### Windows
 
 ```powershell
-iwr -useb https://raw.githubusercontent.com/spkrbox/better-aoty/main/install.ps1 | iex
+iwr -useb https://raw.githubusercontent.com/spkrbox/better-aoty/refs/heads/master/scripts/install.ps1 | iex
 ```
 
 ## Manual Installation
