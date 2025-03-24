@@ -29,7 +29,7 @@ fi
 mkdir -p "$EXTENSIONS_DIR"
 
 echo -e "${BLUE}Downloading latest version...${NC}"
-curl -s -L "https://github.com/jawad/better-aoty/releases/latest/download/better-aoty.js" -o "$EXTENSIONS_DIR/better-aoty.js"
+curl -s -L "https://raw.githubusercontent.com/spkrbox/better-aoty/refs/heads/master/dist/better-aoty.js" -o "$EXTENSIONS_DIR/better-aoty.js"
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}Error: Download failed${NC}"

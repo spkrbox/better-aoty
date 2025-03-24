@@ -26,7 +26,7 @@ if (-not (Test-Path $extensionsDir)) {
 }
 
 Write-Host "Downloading latest version..." -ForegroundColor Blue
-$url = "https://github.com/jawad/better-aoty/releases/latest/download/better-aoty.js"
+$url = "https://raw.githubusercontent.com/spkrbox/better-aoty/refs/heads/master/dist/better-aoty.js"
 $outputPath = Join-Path $extensionsDir "better-aoty.js"
 
 try {
