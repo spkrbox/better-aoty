@@ -1,0 +1,22 @@
+{
+    "name": "better-aoty",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "build": "spicetify-creator",
+        "build-local": "spicetify-creator --out=dist --minify",
+        "watch": "spicetify-creator --watch"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@types/react": "^19.0.12",
+        "@types/react-dom": "^19.0.4",
+        "autoprefixer": "^10.4.21",
+        "postcss": "^8.5.3",
+        "spicetify-creator": "^1.0.17",
+        "tailwindcss": "^4.0.15"
+    },
+    "dependencies": {
+        "framer-motion": "^12.5.0"
+    }
+}
