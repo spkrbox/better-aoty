@@ -48,7 +48,6 @@ export function createRatingButton() {
     buttonEl.appendChild(ratingText)
     aotButton.register()
 
-    // Create popover element
     const popover = document.createElement('div')
     popover.id = 'aoty-popover'
     popover.style.position = 'absolute'

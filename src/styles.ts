@@ -7,6 +7,7 @@ export const CSS_STYLES = `
         max-height: 70vh;
         border-radius: 8px;
         overflow: hidden;
+        position: relative;
     }
 
     .aoty-spinner {
@@ -22,10 +23,101 @@ export const CSS_STYLES = `
         to { transform: rotate(360deg); }
     }
 
-    /* Compact header design */
     .aoty-header {
         border-radius: 0;
         overflow: hidden;
+    }
+
+    .aoty-tabs-wrapper {
+        display: flex;
+        background: transparent;
+        margin: 10px 16px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .aoty-tabs {
+        display: flex;
+        flex: 1;
+    }
+
+    .aoty-pin-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 10;
+        background: var(--spice-card);
+        border: none;
+        width: 16px;
+        height: 16px;
+        padding: 2px;
+        cursor: pointer;
+        color: var(--spice-subtext);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 0 8px 0 6px;
+        box-shadow: -1px 1px 4px rgba(0, 0, 0, 0.1);
+        transform: translateX(12px);
+        opacity: 0.3;
+    }
+
+    .aoty-pin-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -24px;
+        width: 24px;
+        height: 24px;
+        background: transparent;
+    }
+
+    .aoty-popover-content:hover .aoty-pin-button,
+    .aoty-pin-button:hover,
+    .aoty-pin-button.active {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    .aoty-pin-button:hover {
+        color: var(--spice-text);
+        background: var(--spice-highlight);
+        width: 20px;
+        height: 20px;
+        padding: 4px;
+    }
+
+    .aoty-pin-button.active {
+        color: var(--spice-button);
+        background: var(--spice-highlight);
+        width: 20px;
+        height: 20px;
+        padding: 4px;
+    }
+
+    .aoty-pin-button svg {
+        width: 100%;
+        height: 100%;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .aoty-pin-button::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 2px;
+        height: 100%;
+        background: var(--spice-card);
+        opacity: 0.4;
+        border-radius: 1px 0 0 1px;
+        transform: translateX(-100%);
+        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .aoty-pin-button:hover::after,
+    .aoty-pin-button.active::after {
+        opacity: 0;
     }
 
     .aoty-album-cover {
@@ -120,14 +212,6 @@ export const CSS_STYLES = `
         align-items: center;
         justify-content: center;
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-    }
-
-    .aoty-tabs {
-        display: flex;
-        background: transparent;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 0;
-        margin: 10px 16px 0;
     }
 
     .aoty-tab {
@@ -373,5 +457,10 @@ export const CSS_STYLES = `
         color: var(--spice-subtext);
         font-size: 12px;
         opacity: 0.7;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100px;
     }
 `

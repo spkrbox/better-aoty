@@ -18,6 +18,7 @@ export interface UserReview {
     rating?: number | null
     text: string
     likes: number
+    profile_picture?: string
 }
 
 export interface BuyLink {
