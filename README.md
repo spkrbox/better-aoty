@@ -2,7 +2,7 @@
 
 A spicetify extension that shows album ratings from albumoftheyear.org directly in your player.
 
-![better-aoty preview](./assets/preview.webp)
+![better-aoty preview](./assets/prev.webp)
 
 ## Installation
 
